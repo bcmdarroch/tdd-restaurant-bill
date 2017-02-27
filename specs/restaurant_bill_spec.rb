@@ -38,6 +38,14 @@ describe RestaurantBill do
   end
 
   it "Calculate sub-total with tax" do
+    my_order = ["Pike Place Chowder", 8.5]
+    addie_order = ["New England Clam Chowder", 7.5]
+    rana_order = ["Salmon & Tomato Chowder", 10.5]
 
+    @my_bill.order_item(my_order[0], my_order[1])
+    @my_bill.order_item(addie_order[0], addie_order[1])
+    @my_bill.order_item(rana_order[0], rana_order[1])
+
+    @my_bill.total_bill.must_equal 29.044
   end
 end

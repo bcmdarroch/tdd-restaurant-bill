@@ -37,15 +37,60 @@ describe RestaurantBill do
     @my_bill.ordered_items.must_include rana_order
   end
 
-  it "Calculate sub-total with tax" do
-    my_order = ["Pike Place Chowder", 8.5]
-    addie_order = ["New England Clam Chowder", 7.5]
-    rana_order = ["Salmon & Tomato Chowder", 10.5]
+  it "Calculate sub-total without tax or tip" do
+    our_meal = [
+      ["Pike Place Chowder", 8.5],
+      ["New England Clam Chowder", 7.5],
+      ["Salmon & Tomato Chowder", 10.5]
+      ]
 
-    @my_bill.order_item(my_order[0], my_order[1])
-    @my_bill.order_item(addie_order[0], addie_order[1])
-    @my_bill.order_item(rana_order[0], rana_order[1])
+    @my_bill.order_item(our_meal[0][0], my_order[0][1])
+    @my_bill.order_item(our_meal[1][0], addie_order[1][1])
+    @my_bill.order_item(our_meal[2][0], our_meal[2][1])
 
-    @my_bill.total_bill.must_equal 29.044
+    @my_bill.total.must_equal 26.5
   end
+
+  it "Calculate tax using sub-total" do
+    our_meal = [
+      ["Pike Place Chowder", 8.5],
+      ["New England Clam Chowder", 7.5],
+      ["Salmon & Tomato Chowder", 10.5]
+      ]
+
+    @my_bill.order_item(our_meal[0][0], my_order[0][1])
+    @my_bill.order_item(our_meal[1][0], addie_order[1][1])
+    @my_bill.order_item(our_meal[2][0], our_meal[2][1])
+
+    @my_bill.tax.must_equal 2.544
+  end
+
+  it "Calculate tip using sub-total and given percentage" do
+    our_meal = [
+      ["Pike Place Chowder", 8.5],
+      ["New England Clam Chowder", 7.5],
+      ["Salmon & Tomato Chowder", 10.5]
+      ]
+
+    @my_bill.order_item(our_meal[0][0], my_order[0][1])
+    @my_bill.order_item(our_meal[1][0], addie_order[1][1])
+    @my_bill.order_item(our_meal[2][0], our_meal[2][1])
+
+    @my_bill.tip(0.2).must_equal 5.3
+  end
+
+  it "Calculate final bill with sub-total, tax, and tip" do
+    our_meal = [
+      ["Pike Place Chowder", 8.5],
+      ["New England Clam Chowder", 7.5],
+      ["Salmon & Tomato Chowder", 10.5]
+      ]
+
+    @my_bill.order_item(our_meal[0][0], my_order[0][1])
+    @my_bill.order_item(our_meal[1][0], addie_order[1][1])
+    @my_bill.order_item(our_meal[2][0], our_meal[2][1])
+
+    @my_bill.final_bill.must_equal 34.344
+  end
+
 end

@@ -61,6 +61,12 @@ describe RestaurantBill do
     @my_bill.tip(0.2).must_equal 5.300000000000001
   end
 
+  it "Raises error if tip percentage is negative" do
+    proc {
+      @my_bill.tip(-0.2).must_raise ArgumentError
+    }
+  end
+
   it "Calculate final bill with sub-total, tax, and tip" do
     @my_bill.order_item("Pike Place Chowder", 8.5)
     @my_bill.order_item("New England Clam Chowder", 7.5)

@@ -24,6 +24,7 @@ class RestaurantBill
 
 # A method to add a tip. Returns total with tip.
   def tip(percent)
+    raise ArgumentError.new("You can't give a negative tip, stingy!") if percent < 0
     @tip_amount = total * percent
   end
 

@@ -1,6 +1,5 @@
 class RestaurantBill
-# The class should have the following attributes: ordered_items, tip and total
-  attr_reader :ordered_items, :total, :tip
+  attr_reader :ordered_items, :total, :tip_amount
 
   def initialize
     @ordered_items = []
@@ -20,17 +19,27 @@ class RestaurantBill
   end
 
   def tax
-    @total * 0.096
+    total * 0.096
   end
 
 # A method to add a tip. Returns total with tip.
   def tip(percent)
-    @tip = @total * percent
+    @tip_amount = total * percent
   end
 
 # A way to see the final cost of a bill, with tax and tip
   def final_bill
-    @total + tax + @tip
+    total + tax + @tip_amount
   end
 
 end
+
+# my_bill = RestaurantBill.new
+# my_bill.order_item("Pike Place Chowder", 8.5)
+# my_bill.order_item("New England Clam Chowder", 7.5)
+# my_bill.order_item("Salmon & Tomato Chowder", 10.5)
+#
+# my_bill.tip(0.2)
+# puts "Tip: #{my_bill.tip_amount}"
+# puts "Tax: #{my_bill.tax}"
+# puts "Total: #{my_bill.total}"
